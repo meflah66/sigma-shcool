@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sigma School - Join the Brotherhood</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #0f0f0f, #1a1a1a);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      animation: fadeInDown 1s ease forwards;
+    }
+    form {
+      background-color: #111;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      animation: fadeInUp 1.5s ease forwards;
+    }
+    input, select, label {
+      display: block;
+      width: 100%;
+      margin-bottom: 1rem;
+      padding: 0.6rem;
+      border-radius: 8px;
+      border: none;
+      background-color: #222;
+      color: white;
+      font-size: 1rem;
+    }
+    input[type="submit"] {
+      background-color: #e60000;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    input[type="submit"]:hover {
+      background-color: #ff1a1a;
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <h1>انضم إلى Sigma School</h1>
+  <form action="https://api.telegram.org/bot<YOUR_BOT_TOKEN>/sendMessage" method="post" onsubmit="return submitForm(event)">
+    <label for="name">الاسم الحقيقي:</label>
+    <input type="text" id="name" name="name" required />
+
+    <label for="surname">اللقب:</label>
+    <input type="text" id="surname" name="surname" required />
+
+    <label for="alias">الاسم المستعار (اسم العصابة):</label>
+    <input type="text" id="alias" name="alias" required />
+
+    <label for="whatsapp">رقم الواتساب:</label>
+    <input type="tel" id="whatsapp" name="whatsapp" placeholder="مثال: +213600000000" required />
+
+    <label for="avatar">صورة شخصيتك (رابط صورة):</label>
+    <input type="url" id="avatar" name="avatar" placeholder="ضع رابط صورة هنا" required />
+
+    <label>
+      <input type="checkbox" id="agree" required />
+      أوافق على قوانين المجموعة
+    </label>
+
+    <input type="submit" value="انضم الآن" />
+  </form>
+
+  <script>
+    async function submitForm(e) {
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      const surname = document.getElementById("surname").value;
+      const alias = document.getElementById("alias").value;
+      const whatsapp = document.getElementById("whatsapp").value;
+      const avatar = document.getElementById("avatar").value;
+      const agree = document.getElementById("agree").checked;
+
+      if (!agree) {
+        alert("يجب الموافقة على القوانين.");
+        return;
+      }
+
+      const message = `🧠 تسجيل جديد في Sigma School:
+
+👤 الاسم: ${name} 💋
+🔹 اللقب: ${surname}  🔀
+🕶️ الاسم المستعار: ${alias}  🔥
+📱 واتساب: ${whatsapp}  🤖
+🖼️ صورة: ${avatar}`;  🙎🏻
+
+      const botToken = "7832069025:AAFj5arfMdnqFeMbZzjXsmBxdbhpySwJ7bg";
+      const chatId = "8098432677";
+
+      await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chat_id: chatId, text: message })
+      });
+
+      alert("تم إرسال البيانات بنجاح!");
+      e.target.reset();
+    }
+  </script>
+</body>
+</html>
